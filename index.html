@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三年级网课班学生画画作品</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "Arial", sans-serif;
+            /* 渐变背景 */
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 外框 */
+        .viewer {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 30px 20px;
+            box-shadow: 0 8px 30px rgba(255, 138, 176, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 装饰小元素 */
+        .viewer::before {
+            content: "🎨";
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 24px;
+        }
+
+        .viewer::after {
+            content: "✏️";
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+        }
+
+        /* 图片 */
+        .viewer img {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 15px;
+        }
+
+        /* 图片文字 */
+        .caption {
+            margin-top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6b9d;
+            line-height: 1.6;
+            padding: 0 10px;
+            text-shadow: 1px 1px 2px rgba(255, 107, 157, 0.2);
+        }
+
+        /* 页码 */
+        .count {
+            margin-top: 8px;
+            font-size: 17px;
+            color: #999;
+            font-style: italic;
+        }
+
+        /* 按钮区域 */
+        .buttons {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* 按钮 */
+        button {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 154, 158, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 154, 158, 0.4);
+        }
+
+        /* 手机适配 */
+        @media (max-width:600px) {
+            .viewer {
+                padding: 25px 15px;
+            }
+
+            .caption {
+                font-size: 20px;
+            }
+
+            button {
+                width: 48%;
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="viewer">
+
+        <!-- 图片 -->
+        <img id="image" src="xueshengzuopin/richushanhu.JPG">
+
+        <!-- 图片文字 -->
+        <div class="caption" id="caption">
+            日出山湖
+        </div>
+
+        <!-- 页码 -->
+        <div class="count" id="count">
+            第 1 / 7 张
+        </div>
+
+        <!-- 按钮 -->
+        <div class="buttons">
+            <button onclick="prevImage()">上一张</button>
+            <button onclick="nextImage()">下一张</button>
+        </div>
+
+    </div>
+
+    <script>
+
+        // 七张图片
+        const images = [
+            {
+                src: "xueshengzuopin/richushanhu.JPG",
+                text: "日出山湖"
+            },
+            {
+                src: "xueshengzuopin/Poppy playtime.jpg",
+                text: "Poppy playtime"
+            },
+            {
+                src: "xueshengzuopin/fenwumanshanye.jpg",
+                text: "粉雾漫山野"
+            },
+            {
+                src: "xueshengzuopin/Izuku Midoriya(deku).jpg",
+                text: "Izuku Midoriya(deku)"
+            },
+            {
+                src: "xueshengzuopin/caisezuopin.jpg",
+                text: "彩色作品"
+            },
+            {
+                src: "xueshengzuopin/junzhizhu.jpg",
+                text: "君子竹"
+            },
+            {
+                src: "xueshengzuopin/meilidenvhai.jpg",
+                text: "美丽的女孩"
+            }
+        ];
+
+        let index = 0;
+
+        // 显示图片
+        function showImage() {
+            document.getElementById("image").src = images[index].src;
+            document.getElementById("caption").innerText = images[index].text;
+            document.getElementById("count").innerText = `第 ${index + 1} / ${images.length} 张`;
+        }
+
+        // 下一张
+        function nextImage() {
+            index = (index + 1) % images.length;
+            showImage();
+        }
+
+        // 上一张
+        function prevImage() {
+            index = (index - 1 + images.length) % images.length;
+            showImage();
+        }
+
+        // 键盘控制
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowRight") nextImage();
+            if (e.key === "ArrowLeft") prevImage();
+        });
+
+    </script>
+
+</body>
+
+</html>
