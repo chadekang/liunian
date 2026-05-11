@@ -45,7 +45,6 @@
             left: 20px;
             font-size: 24px;
         }
-
         .viewer::after {
             content: "✏️";
             position: absolute;
@@ -76,17 +75,23 @@
             text-shadow: 1px 1px 2px rgba(255, 107, 157, 0.2);
         }
 
-        /* 页码 */
+        /* 页码 + 提示文字 */
         .count {
             margin-top: 8px;
             font-size: 17px;
             color: #999;
             font-style: italic;
         }
+        .tip {
+            margin-top: 5px;
+            font-size: 15px;
+            color: #ff4d4f;
+            height: 22px; /* 固定高度，避免布局跳动 */
+        }
 
         /* 按钮区域 */
         .buttons {
-            margin-top: 25px;
+            margin-top: 15px;
             display: flex;
             justify-content: center;
             gap: 20px;
@@ -106,8 +111,15 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 10px rgba(255, 154, 158, 0.3);
         }
-
-        button:hover {
+        /* 按钮禁用样式 */
+        button:disabled {
+            background: #e0e0e0;
+            color: #b0b0b0;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none;
+        }
+        button:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(255, 154, 158, 0.4);
         }
@@ -117,11 +129,9 @@
             .viewer {
                 padding: 25px 15px;
             }
-
             .caption {
                 font-size: 20px;
             }
-
             button {
                 width: 48%;
                 font-size: 16px;
@@ -147,11 +157,13 @@
         <div class="count" id="count">
             第 1 / 7 张
         </div>
+        <!-- 提示信息 -->
+        <div class="tip" id="tip"></div>
 
         <!-- 按钮 -->
         <div class="buttons">
-            <button onclick="prevImage()">上一张</button>
-            <button onclick="nextImage()">下一张</button>
+            <button id="prevBtn" onclick="prevImage()">上一张</button>
+            <button id="nextBtn" onclick="nextImage()">下一张</button>
         </div>
 
     </div>
@@ -192,30 +204,62 @@
 
         let index = 0;
 
-        // 显示图片
+        // 显示图片 + 更新按钮状态 + 提示
         function showImage() {
             document.getElementById("image").src = images[index].src;
             document.getElementById("caption").innerText = images[index].text;
             document.getElementById("count").innerText = `第 ${index + 1} / ${images.length} 张`;
+
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+            const tipText = document.getElementById("tip");
+
+            // 判断第一张：禁用上一张，显示提示
+            if (index === 0) {
+                prevBtn.disabled = true;
+                tipText.innerText = "已是第一张图片";
+            } else {
+                prevBtn.disabled = false;
+            }
+
+            // 判断最后一张：禁用下一张，显示提示
+            if (index === images.length - 1) {
+                nextBtn.disabled = true;
+                tipText.innerText = "已是最后一张图片";
+            } else {
+                nextBtn.disabled = false;
+            }
+
+            // 非首尾页，清空提示
+            if (index > 0 && index < images.length - 1) {
+                tipText.innerText = "";
+            }
         }
 
-        // 下一张
+        // 下一张（只在非最后一张时执行）
         function nextImage() {
-            index = (index + 1) % images.length;
-            showImage();
+            if (index < images.length - 1) {
+                index++;
+                showImage();
+            }
         }
 
-        // 上一张
+        // 上一张（只在非第一张时执行）
         function prevImage() {
-            index = (index - 1 + images.length) % images.length;
-            showImage();
+            if (index > 0) {
+                index--;
+                showImage();
+            }
         }
 
-        // 键盘控制
+        // 键盘控制（同样限制范围）
         document.addEventListener("keydown", function (e) {
-            if (e.key === "ArrowRight") nextImage();
-            if (e.key === "ArrowLeft") prevImage();
+            if (e.key === "ArrowRight" && index < images.length - 1) nextImage();
+            if (e.key === "ArrowLeft" && index > 0) prevImage();
         });
+
+        // 初始化页面
+        showImage();
 
     </script>
 
