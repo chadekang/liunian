@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>2026年5月学生绘画作品</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ================= 页面背景 ================= */
+
+        body {
+
+            font-family: "Microsoft YaHei", "Arial", sans-serif;
+
+            background:
+                radial-gradient(circle at top left,
+                    rgba(255, 255, 255, 0.7),
+                    transparent 30%),
+
+                radial-gradient(circle at bottom right,
+                    rgba(255, 255, 255, 0.5),
+                    transparent 30%),
+
+                linear-gradient(135deg,
+                    #ffdde1 0%,
+                    #ee9ca7 25%,
+                    #c2e9fb 55%,
+                    #a1c4fd 75%,
+                    #fbc2eb 100%);
+
+            background-attachment: fixed;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+
+            overflow-x: hidden;
+
+            position: relative;
+        }
+
+        /* 背景柔光 */
+
+        body::before,
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            border-radius: 50%;
+
+            z-index: -1;
+
+            filter: blur(10px);
+
+            opacity: 0.5;
+        }
+
+        body::before {
+
+            width: 320px;
+            height: 320px;
+
+            background: rgba(255, 255, 255, 0.9);
+
+            top: -100px;
+            left: -100px;
+        }
+
+        body::after {
+
+            width: 260px;
+            height: 260px;
+
+            background: rgba(255, 255, 255, 0.6);
+
+            bottom: -80px;
+            right: -80px;
+        }
+
+        /* ================= 绘画作品馆 ================= */
+
+        .viewer {
+
+            width: 100%;
+            max-width: 920px;
+
+            position: relative;
+
+            padding: 35px 24px;
+
+            border-radius: 34px;
+
+            overflow: hidden;
+
+            text-align: center;
+
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.94),
+                    rgba(255, 255, 255, 0.94)) padding-box,
+
+                linear-gradient(135deg,
+                    #ff9ec4,
+                    #ffd6a5,
+                    #fff1a8,
+                    #caffbf,
+                    #9bf6ff,
+                    #bdb2ff,
+                    #ffc6ff) border-box;
+
+            border: 7px solid transparent;
+
+            backdrop-filter: blur(14px);
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.08),
+                0 0 30px rgba(255, 255, 255, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.7);
+        }
+
+        /* 顶部彩色颜料条 */
+
+        .viewer::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 16px;
+
+            background:
+                linear-gradient(90deg,
+                    #ff595e 0%,
+                    #ffca3a 20%,
+                    #8ac926 40%,
+                    #1982c4 60%,
+                    #6a4c93 80%,
+                    #ff8fab 100%);
+
+            z-index: 2;
+        }
+
+        /* 底部柔光 */
+
+        .viewer::after {
+
+            content: "";
+
+            position: absolute;
+
+            bottom: -70px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 85%;
+            height: 140px;
+
+            background:
+                radial-gradient(ellipse,
+                    rgba(255, 182, 193, 0.28),
+                    transparent 70%);
+
+            z-index: 0;
+        }
+
+        /* ================= 艺术装饰 ================= */
+
+        .corner {
+
+            position: absolute;
+
+            width: 75px;
+            height: 75px;
+
+            border-radius: 50%;
+
+            opacity: 0.18;
+
+            filter: blur(3px);
+
+            z-index: 0;
+        }
+
+        .corner1 {
+            background: #ff6b6b;
+            top: 20px;
+            left: 20px;
+        }
+
+        .corner2 {
+            background: #ffd93d;
+            top: 20px;
+            right: 20px;
+        }
+
+        .corner3 {
+            background: #6bcB77;
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .corner4 {
+            background: #4d96ff;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        /* 内层艺术边框 */
+
+        .inner-frame {
+
+            position: absolute;
+
+            inset: 18px;
+
+            border-radius: 24px;
+
+            border: 2px dashed rgba(255, 182, 193, 0.45);
+
+            pointer-events: none;
+
+            z-index: 1;
+        }
+
+        /* 画笔纹理 */
+
+        .paint-line {
+
+            position: absolute;
+
+            height: 8px;
+
+            border-radius: 20px;
+
+            opacity: 0.22;
+
+            filter: blur(1px);
+
+            z-index: 0;
+        }
+
+        .paint1 {
+
+            width: 120px;
+
+            background: #ff8fab;
+
+            top: 120px;
+            left: -30px;
+
+            transform: rotate(-18deg);
+        }
+
+        .paint2 {
+
+            width: 140px;
+
+            background: #9bf6ff;
+
+            bottom: 130px;
+            right: -35px;
+
+            transform: rotate(18deg);
+        }
+
+        /* ================= 标题 ================= */
+
+        .title {
+
+            font-size: 34px;
+
+            font-weight: bold;
+
+            color: #ff5c8a;
+
+            margin-bottom: 25px;
+
+            text-shadow:
+                2px 2px 6px rgba(255, 92, 138, 0.2);
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        /* ================= 固定图片展示区域 ================= */
+
+        .image-box {
+
+            width: 100%;
+
+            height: 70vh;
+
+            min-height: 320px;
+
+            max-height: 720px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background:
+                linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.95),
+                    rgba(250, 250, 250, 0.92));
+
+            border-radius: 22px;
+
+            overflow: hidden;
+
+            box-shadow:
+                inset 0 0 12px rgba(0, 0, 0, 0.05),
+                0 8px 20px rgba(0, 0, 0, 0.08);
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        /* 图片 */
+
+        .viewer img {
+
+            max-width: 100%;
+
+            max-height: 100%;
+
+            object-fit: contain;
+
+            transition: 0.4s;
+        }
+
+        /* ================= 图片文字 ================= */
+
+        .caption {
+
+            margin-top: 18px;
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #ff5f8f;
+
+            line-height: 1.6;
+
+            padding: 0 10px;
+
+            text-shadow:
+                1px 1px 3px rgba(255, 95, 143, 0.15);
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        /* 页码 */
+
+        .count {
+
+            margin-top: 10px;
+
+            font-size: 17px;
+
+            color: #888;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        /* 提示 */
+
+        .tip {
+
+            margin-top: 8px;
+
+            font-size: 15px;
+
+            color: #ff4d4f;
+
+            min-height: 22px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        /* ================= 按钮 ================= */
+
+        .buttons {
+
+            margin-top: 22px;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+        button {
+
+            padding: 14px 32px;
+
+            border: none;
+
+            border-radius: 50px;
+
+            background:
+                linear-gradient(135deg,
+                    #ff9a9e 0%,
+                    #fad0c4 100%);
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            box-shadow:
+                0 6px 16px rgba(255, 154, 158, 0.35);
+        }
+
+        button:hover:not(:disabled) {
+
+            transform:
+                translateY(-3px) scale(1.03);
+
+            box-shadow:
+                0 8px 20px rgba(255, 154, 158, 0.45);
+        }
+
+        button:disabled {
+
+            background: #dddddd;
+
+            color: #999;
+
+            cursor: not-allowed;
+
+            box-shadow: none;
+
+            transform: none;
+        }
+
+        /* ================= 手机适配 ================= */
+
+        @media (max-width:768px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .viewer {
+
+                padding: 24px 14px;
+
+                border-radius: 26px;
+            }
+
+            .title {
+
+                font-size: 25px;
+
+                margin-bottom: 18px;
+            }
+
+            .caption {
+
+                font-size: 21px;
+            }
+
+            .count {
+
+                font-size: 15px;
+            }
+
+            .tip {
+
+                font-size: 14px;
+            }
+
+            button {
+
+                width: 47%;
+
+                font-size: 16px;
+
+                padding: 12px;
+            }
+
+            .corner {
+
+                width: 55px;
+                height: 55px;
+            }
+
+            .image-box {
+
+                height: 60vh;
+
+                min-height: 260px;
+            }
+        }
+
+        /* 超小手机 */
+
+        @media (max-width:480px) {
+
+            .title {
+                font-size: 22px;
+            }
+
+            .caption {
+                font-size: 18px;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .image-box {
+
+                height: 55vh;
+
+                min-height: 240px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="viewer">
+
+        <!-- 艺术装饰 -->
+
+        <div class="corner corner1"></div>
+        <div class="corner corner2"></div>
+        <div class="corner corner3"></div>
+        <div class="corner corner4"></div>
+
+        <div class="inner-frame"></div>
+
+        <div class="paint-line paint1"></div>
+        <div class="paint-line paint2"></div>
+
+        <!-- 标题 -->
+
+        <div class="title">
+            网课一、二、三年级画画作品
+        </div>
+
+        <!-- 固定图片区域 -->
+
+        <div class="image-box">
+
+            <img id="image" src="123nianjihuahuazuopin/BAKUGO katsuki-张世薇.jpg">
+
+        </div>
+
+        <!-- 图片标题 -->
+
+        <div class="caption" id="caption">
+
+            BAKUGO katsuki
+
+        </div>
+
+        <!-- 页码 -->
+
+        <div class="count" id="count">
+
+            第 1 / 12 张
+
+        </div>
+
+        <!-- 提示 -->
+
+        <div class="tip" id="tip"></div>
+
+        <!-- 按钮 -->
+
+        <div class="buttons">
+
+            <button id="prevBtn" onclick="prevImage()">
+
+                上一张
+
+            </button>
+
+            <button id="nextBtn" onclick="nextImage()">
+
+                下一张
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        // 图片数据
+
+        // 图片数据（12张）
+
+        const images = [
+
+            {
+                src: "123nianjihuahuazuopin/BAKUGO katsuki-张世薇.jpg",
+                text: "BAKUGO katsuki"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/小动物园-陈显莹.jpg",
+                text: "小动物园"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/平静的生活-景钰秋.jpg",
+                text: "平静的生活"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/月下崖居-杨善俐.jpg",
+                text: "月下崖居"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/星落青芜-李润勤.jpg",
+                text: "星落青芜"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/春日部-张玉珠.jpg",
+                text: "春日部"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/苗族小美女-刘祖玲.jpg",
+                text: "苗族小美女"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/夏天风景-张如意.jpg",
+                text: "夏天风景"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/海边晚霞-吴永冬.jpg",
+                text: "海边晚霞"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/六一快乐-杨静怡.jpg",
+                text: "六一快乐"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/漂亮的海边-李润颖.jpg",
+                text: "漂亮的海边"
+            },
+
+            {
+                src: "123nianjihuahuazuopin/山顶的晴天-姜吉甯.jpg",
+                text: "山顶的晴天"
+            }
+
+        ];
+
+
+        let index = 0;
+
+        // 显示图片
+
+        function showImage() {
+
+            document.getElementById("image").src =
+                images[index].src;
+
+            document.getElementById("caption").innerText =
+                images[index].text;
+
+            document.getElementById("count").innerText =
+                `第 ${index + 1} / ${images.length} 张`;
+
+            const prevBtn =
+                document.getElementById("prevBtn");
+
+            const nextBtn =
+                document.getElementById("nextBtn");
+
+            const tipText =
+                document.getElementById("tip");
+
+            // 第一张
+
+            if (index === 0) {
+
+                prevBtn.disabled = true;
+
+                tipText.innerText =
+                    "已经是第一张作品啦 ✨";
+
+            } else {
+
+                prevBtn.disabled = false;
+            }
+
+            // 最后一张
+
+            if (index === images.length - 1) {
+
+                nextBtn.disabled = true;
+
+                tipText.innerText =
+                    "已经浏览完所有作品啦 🎉";
+
+            } else {
+
+                nextBtn.disabled = false;
+            }
+
+            // 中间页
+
+            if (
+                index > 0 &&
+                index < images.length - 1
+            ) {
+                tipText.innerText = "";
+            }
+        }
+
+        // 下一张
+
+        function nextImage() {
+
+            if (index < images.length - 1) {
+
+                index++;
+
+                showImage();
+            }
+        }
+
+        // 上一张
+
+        function prevImage() {
+
+            if (index > 0) {
+
+                index--;
+
+                showImage();
+            }
+        }
+
+        // 键盘控制
+
+        document.addEventListener(
+            "keydown",
+            function (e) {
+
+                if (
+                    e.key === "ArrowRight" &&
+                    index < images.length - 1
+                ) {
+                    nextImage();
+                }
+
+                if (
+                    e.key === "ArrowLeft" &&
+                    index > 0
+                ) {
+                    prevImage();
+                }
+            }
+        );
+
+        // 初始化
+
+        showImage();
+
+    </script>
+
+</body>
+
+</html>
